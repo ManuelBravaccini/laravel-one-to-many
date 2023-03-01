@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use app\Models\Type;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +14,11 @@ use Illuminate\Support\Facades\Storage;
 class ProjectController extends Controller
 {
     protected $validationRules = [
-        'title' => ['required', 'unique:projects' ],
+        'title' => ['required', 'unique:projects'],
         'project_date' => 'required',
         'content' => 'required',
-        'image' => 'required|image|max:1024' // Max file size 1 MB
+        'image' => 'required|image|max:1024', // Max file size 1 MB
+        'type_id' => 'required|exists:types,id'
     ];
     /**
      * Display a listing of the resource.
@@ -36,7 +38,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create', ["project" => new Project()]);
+        return view('admin.projects.create', ["project" => new Project(), 'types' => Type::all()]);
     }
 
     /**
@@ -77,7 +79,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', [ 'project' => $project] );
+        return view('admin.projects.edit', ['project' => $project, 'types' => Type::all()]);
     }
 
     /**
@@ -90,19 +92,20 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $request->validate([
-            'title' => ['required', Rule::unique('projects')->ignore($project->id) ],
+            'title' => ['required', Rule::unique('projects')->ignore($project->id)],
             'project_date' => 'required',
             'content' => 'required',
-            'image' => 'required|image|max:1024' // Max file size 1 MB
+            'image' => 'required|image|max:1024', // Max file size 1 MB
+            'type_id' => 'required|exists:types,id'
         ]);
-        
-        
-        if ($request->hasFile('image')){
-            
-            if (!$project->isImageAUrl()){
+
+
+        if ($request->hasFile('image')) {
+
+            if (!$project->isImageAUrl()) {
                 Storage::delete($project->image);
             }
-            
+
             $data['image'] =  Storage::put('uploads', $data['image']);
         }
 

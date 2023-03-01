@@ -39,7 +39,6 @@
                         </button>
                     </form>
                 </td>
-                {{-- per ogni post --}}
             </tr>
             @endforeach
         </tbody>
