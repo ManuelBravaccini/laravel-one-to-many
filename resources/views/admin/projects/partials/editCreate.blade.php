@@ -27,6 +27,14 @@
         <input type="text" class="form-control" id="project_title" placeholder="Insert Project's title" name="title" value="{{ old('title', $project->title) }}">
     </div>
 
+    <select class="form-control mb-3" id="project_type" name="type_id" >
+        @foreach ($types as $type)
+            <option value="{{ $type->id }}"
+                {{ old('type_id', $project->type_id) ==  $type->id ? 'selected' : '' }}> {{ $type->name }}
+            </option>
+        @endforeach
+    </select>
+
     <div class="mb-3">
         <label for="project_date" class="form-label">Project date</label>
         <input type="date" class="form-control" id="project_date" name="project_date" value="{{ old('project_date', $project->project_date) }}">
@@ -36,8 +44,7 @@
         <label for="project_content" class="form-label">Project content</label>
         <textarea class="form-control" id="project_content" rows="5" name="content">{{ old('content', $project->content) }}</textarea>
     </div>
-<!--
--->
+
     <div class="mb-3">
         <label for="project_image" class="form-label">Project image</label>
         <input type="file" class="form-control" id="project_image" name="image" value="{{ old('image', $project->image) }}">
@@ -45,7 +52,9 @@
 
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">
-            Update this project
+            {{ $routeName == 'admin.projects.update' ? 'Update project' : 'Create new project'  }}
         </button>
+    </div>
+
     </div>
 </form>

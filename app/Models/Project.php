@@ -13,9 +13,9 @@ class Project extends Model
         'title', 'slug', 'project_date', 'content', 'image', 'type_id'
     ];
 
-    public function category()
+    public function type()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function isImageAUrl()

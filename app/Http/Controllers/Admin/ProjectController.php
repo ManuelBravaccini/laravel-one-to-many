@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use app\Models\Type;
+use App\Models\Type;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+
 
 class ProjectController extends Controller
 {
@@ -38,7 +39,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create', ["project" => new Project(), 'types' => Type::all()]);
+        return view('admin.projects.create', ['project' => new Project(), 'types' => Type::all()]);
     }
 
     /**
@@ -79,7 +80,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', ['project' => $project, 'types' => Type::all()]);
+        return view('admin.projects.edit', ['projects' => $project, 'types' => Type::all()]);
     }
 
     /**
