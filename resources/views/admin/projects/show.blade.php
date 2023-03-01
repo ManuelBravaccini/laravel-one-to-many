@@ -17,7 +17,7 @@
                 @if ( $project->isImageAUrl())
                     <img src="{{ $project->image }}"
                 @else
-                    <img src="{{ asset('storage/uploads/' . $project->image ) }}"
+                    <img src="{{ asset('storage/' . $project->image ) }}"
                 @endif
                 alt="{{ $project->title }} image" class="img-fluid">
             </div>
